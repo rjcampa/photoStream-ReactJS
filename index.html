@@ -7,14 +7,20 @@
 
 </head>
 <body>
-  <div class="container">
-    <div class="col s3 offset-s6" id="photo-app">
+  <div class="container" id="content">
+    
+  </div>
+
+  <script type="text/jsx">
+
+var PhotoList = React.createClass({
+  render: function(){
+    return (<div class="col s3 offset-s6" id="photo-app">
       <h3>React Photos Feed</h3>
 
-      <!-- card #1 -->
       <div class="card">
         <div class="card-image">
-          <img src="https://unsplash.imgix.net/photo-1431184052543-809fa8cc9bd6?fit=crop&fm=jpg0&q=75&w=500">
+          <img src="https://unsplash.imgix.net/photo-1431184052543-809fa8cc9bd6?fit=crop&fm=jpg0&q=75&w=500"></img>
           <span class="card-title">Image one Title</span>
         </div>
         <div class="card-content">
@@ -25,10 +31,10 @@
         </div>
       </div>
 
-      <!-- card #2 -->
+
       <div class="card">
         <div class="card-image">
-          <img src="https://unsplash.imgix.net/photo-1430760814266-9c81759e5e55?fit=crop&fm=jpg&q=75&w=500">
+          <img src="https://unsplash.imgix.net/photo-1430760814266-9c81759e5e55?fit=crop&fm=jpg&q=75&w=500"></img>
           <span class="card-title">Image two Title</span>
         </div>
         <div class="card-content">
@@ -39,10 +45,10 @@
         </div>
       </div>
 
-      <!-- card #3 -->
+
       <div class="card">
         <div class="card-image">
-          <img src="https://unsplash.imgix.net/photo-1430620081187-c59647bac29e?fit=crop&fm=jpg&q=75&w=500">
+          <img src="https://unsplash.imgix.net/photo-1430620081187-c59647bac29e?fit=crop&fm=jpg&q=75&w=500"></img>
           <span class="card-title">Image three Title</span>
         </div>
         <div class="card-content">
@@ -53,10 +59,10 @@
         </div>
       </div>
 
-      <!-- card #4 -->
+
       <div class="card">
         <div class="card-image">
-          <img src="https://ununsplash.imgix.net/photo-1429032021766-c6a53949594f?fit=crop&fm=jpg&q=75&w=500">
+          <img src="https://ununsplash.imgix.net/photo-1429032021766-c6a53949594f?fit=crop&fm=jpg&q=75&w=500"></img>
           <span class="card-title">Image four Title</span>
         </div>
         <div class="card-content">
@@ -75,15 +81,15 @@
         <form class="col s12">
           <div class="row">
             <div class="input-field col s6">
-              <input placeholder="Image Title" type="text">
+              <input placeholder="Image Title" type="text" />
             </div>
             <div class="input-field col s6">
-              <input placeholder="Image Comment" type="text">
+              <input placeholder="Image Comment" type="text" />
             </div>
           </div>
           <div class="row">
             <div class="input-field col s12">
-              <input placeholder="Image URL" type="text">
+              <input placeholder="Image URL" type="text"/>
             </div>
             <p class="col s12">
               <a href="https://unsplash.com/">unsplash.com</a> has some nice ones
@@ -99,11 +105,14 @@
           </div>
         </form>
       </div>
+    </div>)
 
-    </div>
-  </div>
+}});
 
-  <script type="text/jsx">
+React.render(<PhotoList />, document.getElementById('content'));
+
+
+
   </script>
   </body>
 </body>
