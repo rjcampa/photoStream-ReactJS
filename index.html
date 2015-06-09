@@ -68,7 +68,7 @@ var PhotoCard = React.createClass({
 
 var SubmitForm = React.createClass({
   handleSubmit: function(event){
-  
+    event.preventDefault();
     
     var newContent = {
       title: (React.findDOMNode(this.refs.picTitle)).value,
