@@ -4,115 +4,133 @@
   <script src="https://fb.me/react-0.13.3.js"></script>
   <script src="https://fb.me/JSXTransformer-0.13.3.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
-
 </head>
 <body>
-  <div class="container" id="content">
+  <div className="container" id="content">
     
   </div>
-
   <script type="text/jsx">
 
-var PhotoList = React.createClass({
+
+ photoCardList= [
+  {
+
+  title: "title1",
+  imageURL: "https://unsplash.imgix.net/photo-1431184052543-809fa8cc9bd6?fit=crop&fm=jpg0&q=75&w=500",
+  comment: "coooool",
+  isLike: false
+  },{
+  
+  title: "title2",
+  imageURL: "https://unsplash.imgix.net/photo-1430760814266-9c81759e5e55?fit=crop&fm=jpg&q=75&w=500",
+  comment: "awesome",
+  isLike: false
+  },{
+  
+  title: "title3",
+  imageURL: "https://unsplash.imgix.net/photo-1430620081187-c59647bac29e?fit=crop&fm=jpg&q=75&w=500",
+  comment: "sick",
+  isLike: false
+  },{
+  
+  title: "title4",
+  imageURL: "https://ununsplash.imgix.net/photo-1429032021766-c6a53949594f?fit=crop&fm=jpg&q=75&w=500",
+  comment: "whoa!",
+  isLike: false
+  }];
+
+
+var PhotoCard = React.createClass({
+  getInitialState: function(){
+    return {
+      liked: this.props.isLike
+    }
+  },
+  handleClick: function(event){
+    event.preventDefault()
+    this.setState({liked: !this.state.liked})
+  },
   render: function(){
-    return (<div class="col s3 offset-s6" id="photo-app">
-      <h3>React Photos Feed</h3>
+    return( <div className="card">
+                <div className="card-image">
+                  <img src={this.props.imageURL}></img>
+                  <span className="card-title">{this.props.title}</span>
+                </div>
+                <div classNameName="card-content">
+                  <p>{this.props.comment}</p>
+                </div>
+                <div className="card-action">
+                  <a href="#" onClick={this.handleClick}>{this.state.liked ? "Liked!" : "Like"}</a>
+                </div>
+            </div>
+  )}
+});
 
-      <div class="card">
-        <div class="card-image">
-          <img src="https://unsplash.imgix.net/photo-1431184052543-809fa8cc9bd6?fit=crop&fm=jpg0&q=75&w=500"></img>
-          <span class="card-title">Image one Title</span>
-        </div>
-        <div class="card-content">
-          <p>Image one comment.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">Like</a>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-image">
-          <img src="https://unsplash.imgix.net/photo-1430760814266-9c81759e5e55?fit=crop&fm=jpg&q=75&w=500"></img>
-          <span class="card-title">Image two Title</span>
-        </div>
-        <div class="card-content">
-          <p>Image two comment.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">Like</a>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-image">
-          <img src="https://unsplash.imgix.net/photo-1430620081187-c59647bac29e?fit=crop&fm=jpg&q=75&w=500"></img>
-          <span class="card-title">Image three Title</span>
-        </div>
-        <div class="card-content">
-          <p>Image three comment.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">Like</a>
-        </div>
-      </div>
-
-
-      <div class="card">
-        <div class="card-image">
-          <img src="https://ununsplash.imgix.net/photo-1429032021766-c6a53949594f?fit=crop&fm=jpg&q=75&w=500"></img>
-          <span class="card-title">Image four Title</span>
-        </div>
-        <div class="card-content">
-          <p>Image four comment.</p>
-        </div>
-        <div class="card-action">
-          <a href="#">Like</a>
-        </div>
-      </div>
-
+var SubmitForm = React.createClass({
+  handleSubmit: function(event){
+  
+    
+    var newContent = {
+      title: (React.findDOMNode(this.refs.picTitle)).value,
+      imageURL: (React.findDOMNode(this.refs.picURL)).value,
+      comment: (React.findDOMNode(this.refs.picComment)).value, 
+      isLike: true
+    };
+    photoCardList.push(newContent);
+    },
+  render: function(){
+    return (<div> 
       <br />
-      <div class="divider"></div>
+      <div className="divider"></div>
       <br />
       <h3>Add a new photo</h3>
-      <div class="row">
-        <form class="col s12">
-          <div class="row">
-            <div class="input-field col s6">
-              <input placeholder="Image Title" type="text" />
+      <div className="row">
+        <form className="col s6">
+          <div className="row">
+            <div className="input-field col s6">
+              <input ref="picTitle" placeholder="Image Title" type="text" />
             </div>
-            <div class="input-field col s6">
-              <input placeholder="Image Comment" type="text" />
+            <div className="input-field col s6">
+              <input ref="picComment" placeholder="Image Comment" type="text" />
             </div>
           </div>
-          <div class="row">
-            <div class="input-field col s12">
-              <input placeholder="Image URL" type="text"/>
+          <div className="row">
+            <div className="input-field col s12">
+              <input ref="picURL" placeholder="Image URL" type="text"/>
             </div>
-            <p class="col s12">
+            <p className="col s12">
               <a href="https://unsplash.com/">unsplash.com</a> has some nice ones
             </p>
           </div>
-          <div class="row">
-            <p class="col s12">
-              <button class="btn waves-effect waves-light" type="submit" name="action">
+          <div className="row">
+            <p className="col s12">
+              <button onClick={this.handleSubmit} className="btn waves-effect waves-light" type="submit" name="action">
                 Submit
-                <i class="mdi-content-send right"></i>
+                <i className="mdi-content-send right"></i>
               </button>
             </p>
           </div>
         </form>
       </div>
-    </div>)
+      </div>)
+  }
+});
 
-}});
+var PhotoList = React.createClass({
+  render: function(){
+    var list = photoCardList.map(function(photo){ 
+    return <PhotoCard {...photo}/> 
+  });
+    return (
+      <div>
+      {list}
+      <SubmitForm />
+      </div>
+      )
+  }
+});
 
-React.render(<PhotoList />, document.getElementById('content'));
-
-
-
+React.render(React.createElement(PhotoList, photoCardList), document.getElementById('content'));
   </script>
   </body>
 </body>
