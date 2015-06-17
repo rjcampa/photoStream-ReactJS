@@ -1,3 +1,4 @@
+
 <html>
 <head>
   <title>React Photos Feed</title>
@@ -6,39 +7,45 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.96.1/css/materialize.min.css">
 </head>
 <body>
-  <div className="container" id="content">
-    
+  <div class="container">
+  <div id="content">
+  </div>
   </div>
   <script type="text/jsx">
-
-
- photoCardList= [
-  {
-
-  title: "title1",
+  
+  if (typeof localStorage.Cards !== "undefined") {
+  photoCardList = (JSON.parse(localStorage.Cards))}
+  else {
+    photoCardList=
+  [{
+  title: "Lazy Beach Hotel",
   imageURL: "https://unsplash.imgix.net/photo-1431184052543-809fa8cc9bd6?fit=crop&fm=jpg0&q=75&w=500",
-  comment: "coooool",
+  comment: "Panama City, Florida",
   isLike: false
   },{
   
-  title: "title2",
+  title: "London, Overexposed",
   imageURL: "https://unsplash.imgix.net/photo-1430760814266-9c81759e5e55?fit=crop&fm=jpg&q=75&w=500",
-  comment: "awesome",
+  comment: "Night Lights",
   isLike: false
   },{
   
-  title: "title3",
+  title: "Reach for the Sky",
   imageURL: "https://unsplash.imgix.net/photo-1430620081187-c59647bac29e?fit=crop&fm=jpg&q=75&w=500",
-  comment: "sick",
+  comment: "Looks even better from a distance",
   isLike: false
   },{
   
-  title: "title4",
+  title: "Diary of an Empty Life",
   imageURL: "https://ununsplash.imgix.net/photo-1429032021766-c6a53949594f?fit=crop&fm=jpg&q=75&w=500",
-  comment: "whoa!",
+  comment: "Waiting to be filled",
   isLike: false
   }];
+  };
 
+  saveCards = function(){
+  	localStorage.Cards = JSON.stringify(photoCardList);
+  };
 
 var PhotoCard = React.createClass({
   getInitialState: function(){
@@ -48,7 +55,8 @@ var PhotoCard = React.createClass({
   },
   handleClick: function(event){
     event.preventDefault()
-    this.setState({liked: !this.state.liked})
+    this.setState({liked: !this.state.liked});
+    saveCards();
   },
   render: function(){
     return( <div className="card">
@@ -56,7 +64,7 @@ var PhotoCard = React.createClass({
                   <img src={this.props.imageURL}></img>
                   <span className="card-title">{this.props.title}</span>
                 </div>
-                <div classNameName="card-content">
+                <div className="card-content">
                   <p>{this.props.comment}</p>
                 </div>
                 <div className="card-action">
@@ -69,7 +77,6 @@ var PhotoCard = React.createClass({
 var SubmitForm = React.createClass({
   handleSubmit: function(event){
     event.preventDefault();
-    
     var newContent = {
       title: (React.findDOMNode(this.refs.picTitle)).value,
       imageURL: (React.findDOMNode(this.refs.picURL)).value,
@@ -77,12 +84,15 @@ var SubmitForm = React.createClass({
       isLike: true
     };
     photoCardList.push(newContent);
+    (React.findDOMNode(this.refs.picTitle)).value = "";
+    (React.findDOMNode(this.refs.picURL)).value = "";
+    (React.findDOMNode(this.refs.picComment)).value = "";
+    saveCards();
+    this.props.whenClicked();
     },
   render: function(){
     return (<div> 
-      <br />
-      <div className="divider"></div>
-      <br />
+      <br /><div className="divider"></div><br />
       <h3>Add a new photo</h3>
       <div className="row">
         <form className="col s6">
@@ -117,14 +127,23 @@ var SubmitForm = React.createClass({
 });
 
 var PhotoList = React.createClass({
+  handleClick: function(){
+  this.forceUpdate();
+  },
+
   render: function(){
     var list = photoCardList.map(function(photo){ 
     return <PhotoCard {...photo}/> 
   });
     return (
       <div>
+      <h3>Photo Cards</h3>
+      <div id="content" className="col s3 offset-s6" id="photo-app">
       {list}
-      <SubmitForm />
+      </div>
+      <div>
+      <SubmitForm whenClicked={this.handleClick}/>
+      </div>
       </div>
       )
   }
@@ -133,5 +152,5 @@ var PhotoList = React.createClass({
 React.render(React.createElement(PhotoList, photoCardList), document.getElementById('content'));
   </script>
   </body>
-</body>
 </html>
+</body>
